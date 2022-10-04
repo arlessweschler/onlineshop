@@ -1,0 +1,18 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+    Регистрация
+{% endblock %}
+{% block content %}
+<h1 style="padding-left: 100px">Регистрация:</h1>
+
+<div class="registration">
+    <form class="form-order" action="" method="post">
+     {% csrf_token %}
+        <table>
+            {{form}}
+        </table>
+        <button class="button-login">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

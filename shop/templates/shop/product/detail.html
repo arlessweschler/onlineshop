@@ -1,0 +1,66 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load floattags %}
+{% load products_extras %}
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <h2>{{ product.name }}</h2>
+
+    <div class="products-img">
+    {% for i in img %}
+        <div class="product-img">
+            <img  class="prod_img" src="{{i.img.url}}" alt="нет картинки">
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="product-text">
+        <a href="{{ product.get_absolute_url }}review/" style="text-decoration: none;color: white">
+        <div class="form__item">
+             <div class="rating">
+                 <div class="rating__body">
+                      <div class="rating__active"></div>
+                 </div>
+                 <div class="rating__value">{{ product.rating|formatted_float }}</div>
+             </div>
+        </div>
+        </a>
+                {% if product.rating > 0 %}
+                    <p style="font-size: 18px; padding-left: 10px"><a style="color: deepskyblue;" href="{{ product.get_absolute_url }}review/">
+                        {{ product.product_rating.count }} {{ product.product_rating.count|ru_plural:"отзыв,отзыва,отзывов" }}</a></p>
+                {% else %}
+                    <p style="color: grey; font-size: 18px;">Нет отзывов</p>
+                {% endif %}
+
+
+        <p>Цена: {{ product.price|mul:product.sale|floatformat:2 }} руб.</p>
+        <p>Описание: {{ product.full_description }}</p>
+        {% if product.stock > 0 %}
+            <p>Осталось: {{ product.stock }} шт.</p>
+        {% else %}
+            <p style="color: red">Нет в наличии</p>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 20px">
+       {% if product.stock %}
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {% csrf_token %}
+                <span >Количество:</span>
+                <input type="number" value="1" name="quantity" max={{product.stock}} min="1">
+                <input type="text" value="True" name="update" hidden>
+                <span style="color: grey; font-size: 14px">(укажите не более {{product.stock}})</span>
+                <p><input style="margin: 5px" class="button" type="submit" value="Добавить в корзину"></p>
+            </form>
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

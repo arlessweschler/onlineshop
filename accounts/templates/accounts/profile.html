@@ -1,0 +1,34 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+    Профиль
+{% endblock %}
+{% block content %}
+<h1 style="padding-left: 100px">Мой профиль:</h1>
+<div class="profile">
+    <div>
+        <p style="font-family: sans-serif">Имя: {{user.first_name}}</p>
+        <p style="font-family: sans-serif">Фамилия: {{user.last_name}}</p>
+        <p style="font-family: sans-serif"> Телефон: {% if p.phone %} {{p.phone}} {% else %} не указан {% endif %}</p>
+        <span style="font-family: sans-serif">Мой адрес: </span>
+        {% if 'p.postal_code' or 'p.city' or 'p.street' or 'p.house' or 'p.building' or 'p.apartment'  in p %}
+        {% else %}
+        не указан
+        {% endif %}
+            <span style="padding: 5px">{% if p.postal_code %} почтовый индекс: {{p.postal_code}} {% endif %}</span>
+            <span style="padding: 5px">{% if p.city %} город: {{p.city}} {% endif %}</span>
+            <span style="padding: 5px">{% if p.street %} улица: {{p.street}} {% endif %}</span>
+            <span style="padding: 5px">{% if p.house %} дом: {{p.house}} {% endif %}</span>
+            <span style="padding: 5px">{% if p.building %} корпус: {{p.building}} {% endif %}</span>
+            <span style="padding: 5px">{% if p.apartment %} квартира: {{p.apartment}} {% endif %}</span>
+
+    </div>
+
+    <div>
+        <p><a href="{% url 'accounts:profile_change' %}">Изменить данные</a></p>
+        <p><a href="{% url 'accounts:password_change' %}">Изменить пароль</a></p>
+<!--        <p class=" myorder-button-text"><a class="myorder-button" href="{% url 'orders:my_orders' %}">Мои заказы</a></p>-->
+    </div>
+
+</div>
+{% endblock %}

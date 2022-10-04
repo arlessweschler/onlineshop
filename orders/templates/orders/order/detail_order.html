@@ -1,0 +1,80 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block title %}
+    Подробности заказы
+{% endblock %}
+{% block content %}
+<h1 style="padding-left: 100px">Подробности заказа:</h1>
+<div style="padding-left: 70px">
+    <h3>Адрес доставки:</h3>
+    <span style="padding: 5px">{% if order.postal_code %} почтовый индекс: {{order.postal_code}}, {% endif %}</span>
+    <span style="padding: 5px">{% if order.city %} город: {{order.city}}, {% endif %}</span>
+    <span style="padding: 5px">{% if order.street %} улица: {{order.street}}, {% endif %}</span>
+    <span style="padding: 5px">{% if order.house %} дом: {{order.house}}, {% endif %}</span>
+    <span style="padding: 5px">{% if order.building %} корпус: {{order.building}}, {% endif %}</span>
+    <span style="padding: 5px">{% if order.apartment %} квартира: {{order.apartment}} {% endif %}</span>
+    <h3>Номер телефона:</h3>
+    <p>{{ order.buyer.profile.phone }}</p>
+</div><br>
+
+<div>
+    <table class="my_orders-table">
+        <tr>
+           <th>Товар</th>
+           <th>Изображение</th>
+           <th>Цена</th>
+           <th>Количесто</th>
+           <th>Сумма</th>
+        </tr>
+
+        {% for item in items %}
+            <tr>
+                <td>
+                    <p><a style="color: orange; font-size: 16px" href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>
+                    <p>
+                        {% if order.status == 'Доставлен покупателю' and item.product not in rating and not user.is_staff %}
+                                <a style="color: darkolivegreen; font-size: 14px" href="/review_and_rating/{{ item.product.id }}/">Оставить оценку товару</a>
+<!--                            {% if item.product in rating %}-->
+<!--                                <a style="color: darkolivegreen; font-size: 14px" href="/review_and_rating/{{ item.product.id }}/">Исправить оценку</a>-->
+<!--                            {% endif %}-->
+                        {% endif %}
+                    </p>
+                </td>
+                <td>
+                    <a href="{{ item.product.get_absolute_url }}">
+                        <img class="cart-img" src="{{item.product.product_image.first.img.url}}" alt="">
+                    </a>
+                </td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price|mul:item.quantity }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% if user.is_staff %}
+<div style="margin-left: 100px; background: #2c2c2c; padding: 20px; width: 30%; border: 2px solid grey">
+    <p>Статус: {{ order.status }}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name="status" id="">
+            <option value="Принято в обработку">Принято в обработку</option>
+            <option value="Упакован и отправлен">Упакован и отправлен</option>
+            <option value="Доставлен покупателю">Доставлен покупателю</option>
+            <option value="Отменен">Отменен</option>
+        </select>
+        <input type="submit" value="изменить">
+    </form>
+
+    <p>Оплачен: {% if order.paid == False %} нет {% else %} да {% endif %}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="checkbox" name="paid" value="True">
+        <input type="submit" value="оплачено">
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

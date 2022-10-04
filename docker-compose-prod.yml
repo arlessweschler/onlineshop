@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+    web:
+        build: .
+#        command: python /code/manage.py runserver 0.0.0.0:8000
+        command: gunicorn myshop.wsgi -b 0.0.0.0:8000
+        environment:
+            - ENVIRONMENT=production
+            - SECRET_KEY=(rujm4zct5te3jlbya8!3*or63lb_m%s7szuaap--7&)ajwrq=
+            - DEBUG=0
+            - DEFAULT_FROM_EMAIL=micromagic.by@yandex.by
+            - EMAIL_HOST_USER=micromagic.by@yandex.by
+            - EMAIL_HOST_PASSWORD=R1gsjvdj528jd
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
+    db:
+        image: postgres:11
+        environment:
+          POSTGRES_DB: "db"
+          POSTGRES_PASSWORD: "011288"
+

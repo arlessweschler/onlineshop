@@ -1,0 +1,131 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% load floattags %}
+{% load products_extras %}
+    {% if category %}{{ category.name }}{% else %}Мой магазин{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="search">
+    <form  action="">
+         <span class="">Поиск: </span><span class="" >{{ filter.form.name }}</span>
+        <button>
+            <img src="{% static 'img/лупа.jpg' %}" style="height:20px; width:20px" alt="">
+        </button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="filter">
+        <p style="font-size: 25px">Поиск по параметрам:</p>
+
+        <form method="get">
+            <table  class="form-filter">
+<!--                        {{ filter.form }}-->
+                <tr><td>Со скидкой: {{ filter.form.discount }}</td></tr>
+                <tr><td>Производитель: {{ filter.form.brand }}</td></tr>
+                <tr><td>Цена от {{ filter.form.price__gt }}</td></tr>
+                <tr><td>Цена до {{ filter.form.price__lt }}</td></tr>
+                <tr><td>Упорядочить: {{ filter.form.ordering }}</td></tr>
+
+            </table>
+            <input class="button-login" type="submit" value="Найти" style="width: 160px" >
+        </form>
+
+    </div>
+
+
+
+    <div id="main" class="product-list">
+        <h2 style="text-align: center">{% if category %}{{ category.name }}{% else %}Товары{% endif %}</h2>
+        {% for product in products %}
+            <div class="item">
+                <div>
+                    {% if product.discount %}
+                        <span class="discaunt_text">{{product.value_sale}}%</span>
+                    {% endif %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img class="item-img" src="{{product.product_image.first.img.url}}">
+                    </a>
+                </div>
+
+                <div class="item-text">
+                    <p style="font-size: 15px"><a href="{{ product.get_absolute_url }}">{{ product.name|upper }}</a></p>
+                    {% if product.discount %}
+                        <span style="font-size: 16px"><s>{{ product.price }}</s></span>
+                        <span style="color: coral; padding-left: 10px; font-size: 16px">{{ product.sale_price|floatformat:2 }} руб. </span>
+
+                    {% else %}
+                    <p style="font-size: 16px">{{ product.price }} руб. </p>
+                    {% endif %}
+
+                    <a href="{{ product.get_absolute_url }}review/" style="text-decoration: none;">
+                        <div style="margin-top: 20px">
+                             <div class="rating" style="padding-left:80px;">
+                                 <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                 </div>
+                                <div class="rating__value">{{ product.rating|formatted_float }}</div>
+                            </div>
+                        </div>
+                    </a>
+                    {% if product.rating > 0 %}
+                        <p>
+                            <a style="color: deepskyblue; font-size: 18px; padding-bottom: 3px"
+                                href="{{ product.get_absolute_url }}review/">
+                                {{ product.product_rating.count }}  {{ product.product_rating.count|ru_plural:"отзыв,отзыва,отзывов" }}
+                            </a>
+                        </p>
+                    {% else %}
+                        <p style="color: grey; font-size: 18px; padding-bottom: 3px">Нет отзывов</p>
+                    {% endif %}
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+         {% if paginator.num_pages > 1 %}
+            <ul class="step-links">
+                {% if page_obj.has_previous %}
+                    {% if 'brand' and 'name' and 'ordering' and 'price__gt' and 'price__lt' in request.get_full_path %}
+                        <li><a href="{{ request.get_full_path }}&page=1"> << </a></li>
+                        <li><a href="{{ request.get_full_path }}&page={{ page_obj.previous_page_number }}"> < </a></li>
+                    {% else %}
+                        <li><a href="?page=1"> << </a></li>
+                        <li><a href="?page={{ page_obj.previous_page_number }}"> < </a></li>
+                    {% endif %}
+                {% endif %}
+
+                {% for i in paginator.page_range %}
+                    {% if 'brand' and 'name' and 'ordering' and 'price__gt' and 'price__lt' in request.get_full_path %}
+                        <li><a href="{{ request.get_full_path }}&page={{ i }}">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    {% if 'brand' and 'name' and 'ordering' and 'price__gt' and 'price__lt' in request.get_full_path %}
+                        <li><a href="{{ request.get_full_path }}&page={{ page_obj.next_page_number }}"> > </a></li>
+                        <li><a href="{{ request.get_full_path }}&page={{ page_obj.paginator.num_pages }}"> >> </a></li>
+                    {% else %}
+                        <li><a href="?page={{ page_obj.next_page_number }}"> > </a></li>
+                        <li><a href="?page={{ page_obj.paginator.num_pages }}"> >> </a></li>
+                    {% endif %}
+                {% endif %}
+
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ paginator.num_pages }}
+                </span>
+            </ul>
+         {% endif %}
+    </div>
+
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

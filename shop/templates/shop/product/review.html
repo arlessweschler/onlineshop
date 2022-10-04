@@ -1,0 +1,42 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+    Отзывы
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align: center;">Отзывы:</h1>
+<div class="">
+    {% if product.rating %}
+        {% for rating in product.product_rating.all %}
+             <div style="padding: 10px; margin: 10px; border: 2px solid grey; background: #2c2c2c; width: 60%">
+                  <div class="rating">
+                     <div class="rating__body">
+                          <div class="rating__active"></div>
+                     </div>
+                     <div class="rating__value">{{ rating.rating }}</div>
+                  </div>
+                  <p style="font-size: 18px"> {{ rating.user.first_name }}: </p>
+                  <p style="color: #fff9dc"> {{ rating.review }} </p>
+                  <p style="color:grey; font-size: 12px"> {{ rating.created }} </p>
+             </div>
+        {% endfor %}
+
+        {% if request.user not in users %}
+        <div style="margin:50px 0 20px 0"><a class="button"  href="{{product.get_absolute_url }}review_and_rating/">Оставить отзыв</a></div>
+        {% endif %}
+
+    {% else %}
+        <p style="color: silver; font-size: 20px"><b>Нет отзывов</b></p>
+        <p style="color: silver; font-size: 18px; margin-bottom: 50px">Будьте первыми оставьте свой отзыв</p>
+        <a class="button" href="{{product.get_absolute_url }}review_and_rating/">Оставить отзыв</a>
+    {% endif %}
+</div>
+
+
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+
+
+

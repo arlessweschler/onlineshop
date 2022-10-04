@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Мой магазин{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <div class="subheader" id="subheader">
+
+            <div class="contacts">
+                <p>Телефон:</p>
+                 <tel>+375 29 106 84 00</tel>
+            </div>
+
+            <div class="social">
+                <p style="font-family: 'Roboto', sans-serif">Мы в социальных сетях:</p>
+                <a href="https://www.instagram.com/sergeyeroshevich/" target="blank"><img  src="{% static 'img/insti.png' %}" alt=""></a>
+<!--                <a href=""><img  src="{% static 'img/tel.png' %}" alt=""></a>-->
+                <a href="https://www.facebook.com/sergey.eroshevich" target="blank"><img  src="{% static 'img/fac.png' %}" alt=""></a>
+                <a href="https://vk.com/id107526949" target="blank"><img  src="{% static 'img/vkk.png' %}" alt=""></a>
+            </div>
+
+            <div class="logo" id="header">
+                <a href="/" ><img class="logo-img" src="{% static 'img/logo2.jpg' %}"></a>
+            </div>
+
+            {% if user.is_staff %}
+            <div style="margin-top: 50px"><a class="button" href="{% url 'orders:all_orders' %}">Заказы</a></div>
+            {% endif %}
+
+
+            <div class="cart">
+                {% with total_items=cart|length %}
+                    <a href="{% url 'cart:cart_detail' %}"><img class="img-cart" src="{% static 'img/cart.png' %}" alt=""></a>
+                        {% if cart|length > 0 %}
+                             <div class="cart-total"><p>{{ total_items }}</p></div>
+<!--                                на сумму {{ cart.get_total_price }}-->
+                        {% else %}
+                             <div class="cart-total"><p>0</p></div>
+                        {% endif %}
+                {% endwith %}
+            </div>
+
+
+            <div class="profile-top">
+                {% if not user.is_authenticated %}
+                <p><strong><a href="{% url 'accounts:login' %}">Вход в аккаунт</a></strong></p>
+                <p><strong><a href="{% url 'accounts:registration' %}">Регистрация</a></strong></p>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <p style="font-size: 13px">{{user.first_name}}, вы вошли в аккаунт</p>
+                    <p><strong><a href="{% url 'accounts:profile' %}">Профиль</a></strong></p>
+                    <p><strong><a href="{% url 'orders:my_orders' %}">Мои заказы</a></strong></p>
+                    <p><strong><a href="{% url 'accounts:logout' %}">Выход</a></strong></p>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+        <nav id="sidebar" class="sidebar">
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="{% url 'shop:shipping' %}">Доставка</a></li>
+                <li><a href="{% url 'shop:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'shop:payment' %}">Оплата</a></li>
+                <li><a href="{% url 'shop:discounts' %}">Скидки</a></li>
+                {% if user.is_staff %}
+                    <li><a href="{% url 'shop:discount_managment' %}">Управление скидками</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+
+            <nav class="categories">
+                <ul>
+                    <li {% if not category %}class="selected"{% endif %}>
+                        <a href="{% url 'shop:product_list' %}">Все категории</a>
+                    </li>
+                    {% for c in categories %}
+                        <li {% if category.slug == c.slug %} class="selected" {% endif %}>
+                            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+    </header>
+
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <footer class="footer">
+        <p>Ⓒ 2022 myshop.by </p>
+    </footer>
+</div>
+</body>
+</html>
