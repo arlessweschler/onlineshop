@@ -30,7 +30,7 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['limitless-peak-24594.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['hidden-castle-84780.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
