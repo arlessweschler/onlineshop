@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import dropbox
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -163,8 +165,24 @@ STATICFILES_FINDERS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+dbx = dropbox.Dropbox('sl.BQuzVejRE3Y6Vz_NvqE809h3Mr1DZSY0W6DYCEwBzQqk6lLoKmBsDWypYLj8HjxCoAa2foXc9zMnpe5hkKugyyMoTpmGsvEYM3wyBfuSn7O0JdqH-cT3Ll0EqtV1tCcRUadyim0')
+DROPBOX_OAUTH2_TOKEN = 'sl.BQt8OXVlcN-DEmhwJPvJL4LZFv-rbiSSLGJjdWSRUTRkHSe6J73km2k20bNB6G6DnkP-0PGVs61dHVzn7ozC3XXittwHs5W-rJMFseL6AnM_Bzj6bzpQmm5vwOZML0xcxJ1trwU'
+DROPBOX_APP_KEY = 'nqgy6z1bm6rrpi4'
+DROPBOX_APP_SECRET = '8a0877u1q8nanpf'
+DROPBOX_OAUTH2_REFRESH_TOKEN = 'L-xGGujjpTQAAAAAAAAAAd_m7vFTxrhz69UmJk6EczOB44h9YF4DlEVzqXlgXOCj'
+DROPBOX_ROOT_PATH = '/product/'
+AUTHORIZATION_KEY = '5gPBsjzTqxkAAAAAAAAAJM-VC-uT4owK93SvLZY1ljg'
+
+# curl -u nqgy6z1bm6rrpi4:8a0877u1q8nanpf \
+# -d "code=5gPBsjzTqxkAAAAAAAAAJM-VC-uT4owK93SvLZY1ljg&grant_type=authorization_code" \
+# -H "Content-Type: application/x-www-form-urlencoded" \
+# -X POST "https://api.dropboxapi.com/oauth2/token"
+
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+# MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = ''
 
 CART_SESSION_ID = 'cart'
 
