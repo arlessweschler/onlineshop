@@ -171,7 +171,7 @@ DROPBOX_OAUTH2_TOKEN = 'sl.BQt8OXVlcN-DEmhwJPvJL4LZFv-rbiSSLGJjdWSRUTRkHSe6J73km
 DROPBOX_APP_KEY = 'nqgy6z1bm6rrpi4'
 DROPBOX_APP_SECRET = '8a0877u1q8nanpf'
 DROPBOX_OAUTH2_REFRESH_TOKEN = 'L-xGGujjpTQAAAAAAAAAAd_m7vFTxrhz69UmJk6EczOB44h9YF4DlEVzqXlgXOCj'
-DROPBOX_ROOT_PATH = '/product/'
+DROPBOX_ROOT_PATH = '/media/'
 AUTHORIZATION_KEY = '5gPBsjzTqxkAAAAAAAAAJM-VC-uT4owK93SvLZY1ljg'
 
 # curl -u nqgy6z1bm6rrpi4:8a0877u1q8nanpf \
@@ -180,9 +180,11 @@ AUTHORIZATION_KEY = '5gPBsjzTqxkAAAAAAAAAJM-VC-uT4owK93SvLZY1ljg'
 # -X POST "https://api.dropboxapi.com/oauth2/token"
 
 
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/product/'
+# MEDIA_URL = 'https://product.dropbox.com/'
 # MEDIA_ROOT = BASE_DIR / 'media/'
-MEDIA_ROOT = ''
+# MEDIA_ROOT = ''
+
 
 CART_SESSION_ID = 'cart'
 
