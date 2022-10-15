@@ -101,7 +101,7 @@ def mail_make_order(sender, **kwargs):
     from_email = 'micromagic.by@yandex.by'
     instance = kwargs.get('instance')
     to_mail = instance.buyer.email
-    # send_mail(subject, plain_message, from_email, [to_mail], html_message=html_message)
+    send_mail(subject, plain_message, from_email, [to_mail], html_message=html_message)
 
 
 
