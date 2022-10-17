@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import dropbox
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -30,7 +32,7 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['hidden-castle-84780.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -149,17 +151,39 @@ DATE_FORMAT = 'd E Y'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_FINDERS = [
+"django.contrib.staticfiles.finders.FileSystemFinder",
+"django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+dbx = dropbox.Dropbox(os.environ.get('dbx'))
+DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
+DROPBOX_APP_KEY = os.environ.get('DROPBOX_APP_KEY')
+DROPBOX_APP_SECRET = os.environ.get('DROPBOX_APP_SECRET')
+DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get('DROPBOX_OAUTH2_REFRESH_TOKEN')
+DROPBOX_ROOT_PATH = '/media/'
+AUTHORIZATION_KEY = os.environ.get('AUTHORIZATION_KEY')
+
+# получение DROPBOX_OAUTH2_REFRESH_TOKEN через консоль
+# curl -u APP_KEY:APP_SECRET \
+# -d "code=AUTHORIZATION_CODE&grant_type=authorization_code" \
+# -H "Content-Type: application/x-www-form-urlencoded" \
+# -X POST "https://api.dropboxapi.com/oauth2/token"
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media/'
+
 
 CART_SESSION_ID = 'cart'
 

@@ -8,6 +8,7 @@ django = "*"
 whitenoise = "==6.2.0"
 gunicorn = "*"
 dj-database-url = "*"
+django-storages = {extras = ["dropbox"], version = "*"}
 
 [dev-packages]
 

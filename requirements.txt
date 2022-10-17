@@ -10,3 +10,5 @@ psycopg2-binary==2.9.3
 pycryptodome==3.15.0
 pytz==2022.1
 sqlparse==0.4.2
+dropbox~=11.34.0
+dj-database-url==1.0.0
