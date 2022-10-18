@@ -174,12 +174,20 @@ DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get('DROPBOX_OAUTH2_REFRESH_TOKEN')
 DROPBOX_ROOT_PATH = '/media/'
 AUTHORIZATION_KEY = os.environ.get('AUTHORIZATION_KEY')
 
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+dbx = dropbox.Dropbox('sl.BRVAkd7QmtpaqSCghnGBy1XuNcN_9EemjM9dJcYS9FGqyqRU6_SC2eq52GXwTIWqKNcCRWR9rMu0Lb2oN0NqIJXKvap3w13U0TFnJJP96HC6GezBtxDxDQk6et9UHteaZ0VynLs')
+DROPBOX_OAUTH2_TOKEN = 'sl.BQt8OXVlcN-DEmhwJPvJL4LZFv-rbiSSLGJjdWSRUTRkHSe6J73km2k20bNB6G6DnkP-0PGVs61dHVzn7ozC3XXittwHs5W-rJMFseL6AnM_Bzj6bzpQmm5vwOZML0xcxJ1trwU'
+DROPBOX_APP_KEY = 'nqgy6z1bm6rrpi4'
+DROPBOX_APP_SECRET = '8a0877u1q8nanpf'
+DROPBOX_OAUTH2_REFRESH_TOKEN = 'BJdyY3m7v7sAAAAAAAAAAZVoBJ2e_uPV4RMvxYAJqJu7OPQ0fQXBkaDa3CrgZg9z'
+DROPBOX_ROOT_PATH = '/media/'
+AUTHORIZATION_KEY = '5gPBsjzTqxkAAAAAAAAAUWlm5xxUikXjf6eesZdnJSo'
+
 # получение DROPBOX_OAUTH2_REFRESH_TOKEN через консоль
 # curl -u APP_KEY:APP_SECRET \
 # -d "code=AUTHORIZATION_CODE&grant_type=authorization_code" \
 # -H "Content-Type: application/x-www-form-urlencoded" \
 # -X POST "https://api.dropboxapi.com/oauth2/token"
-
 
 
 # MEDIA_URL = '/media/'
