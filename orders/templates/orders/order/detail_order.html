@@ -34,7 +34,7 @@
                     <p><a style="color: orange; font-size: 16px" href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>
                     <p>
                         {% if order.status == 'Доставлен покупателю' and item.product not in rating and not user.is_staff %}
-                                <a style="color: darkolivegreen; font-size: 14px" href="/product_detail/{{ item.product.id }}/{{ item.product.slug }}/review_and_rating/">Оставить оценку товару</a>
+                                <a style="color: darkolivegreen; font-size: 14px" href="/product_detail/{{ item.product.id }}/{{ item.product.slug }}/review_and_rating/">оставить оценку товару</a>
 <!--                            {% if item.product in rating %}-->
 <!--                                <a style="color: darkolivegreen; font-size: 14px" href="/review_and_rating/{{ item.product.id }}/">Исправить оценку</a>-->
 <!--                            {% endif %}-->
