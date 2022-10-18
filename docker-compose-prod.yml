@@ -17,6 +17,7 @@ services:
             - DROPBOX_APP_SECRET=8a0877u1q8nanpf
             - DROPBOX_OAUTH2_REFRESH_TOKEN=L-xGGujjpTQAAAAAAAAAAd_m7vFTxrhz69UmJk6EczOB44h9YF4DlEVzqXlgXOCj
             - AUTHORIZATION_KEY=5gPBsjzTqxkAAAAAAAAAJM-VC-uT4owK93SvLZY1ljg
+
         ports:
             - 8000:8000
         depends_on:

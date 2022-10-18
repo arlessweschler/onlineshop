@@ -165,14 +165,14 @@ STATICFILES_FINDERS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-dbx = dropbox.Dropbox(os.environ.get('dbx'))
-DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
-DROPBOX_APP_KEY = os.environ.get('DROPBOX_APP_KEY')
-DROPBOX_APP_SECRET = os.environ.get('DROPBOX_APP_SECRET')
-DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get('DROPBOX_OAUTH2_REFRESH_TOKEN')
-DROPBOX_ROOT_PATH = '/media/'
-AUTHORIZATION_KEY = os.environ.get('AUTHORIZATION_KEY')
+# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# dbx = dropbox.Dropbox(os.environ.get('dbx'))
+# DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
+# DROPBOX_APP_KEY = os.environ.get('DROPBOX_APP_KEY')
+# DROPBOX_APP_SECRET = os.environ.get('DROPBOX_APP_SECRET')
+# DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get('DROPBOX_OAUTH2_REFRESH_TOKEN')
+# DROPBOX_ROOT_PATH = '/media/'
+# AUTHORIZATION_KEY = os.environ.get('AUTHORIZATION_KEY')
 
 # получение DROPBOX_OAUTH2_REFRESH_TOKEN через консоль
 # curl -u APP_KEY:APP_SECRET \
@@ -181,8 +181,8 @@ AUTHORIZATION_KEY = os.environ.get('AUTHORIZATION_KEY')
 # -X POST "https://api.dropboxapi.com/oauth2/token"
 
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 
 CART_SESSION_ID = 'cart'
